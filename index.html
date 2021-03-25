@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .block {
+            width: 200px;
+            height: 200px;
+            border: 4px solid black;
+            position: fixed;
+            top: 250px;
+            left: 400px;
+        }
+        
+        .text {
+            margin-top: 40%;
+            margin-left: 35%;
+            font-size: large;
+            font-weight: bold;
+            color: red;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="block">
+        <p class="text"></p>
+    </div>
+
+    <script>
+        window.addEventListener('load', function(){
+
+            const block = document.querySelector('.block')
+            const text = document.querySelector('.text')
+
+
+            document.onkeydown = pressKey;
+
+            function pressKey(arrow) {
+                if (arrow.keyCode == '38') {
+                    block.style.top = block.offsetTop - 10 + 'px'
+                }
+                else if (arrow.keyCode == '40') {
+                    block.style.top = block.offsetTop + 10 + 'px'
+                    //down
+                }
+                else if (arrow.keyCode == '37') {
+                    block.style.left = block.offsetLeft - 10 + 'px'
+                }
+                else if (arrow.keyCode == '39') {
+                    block.style.left = block.offsetLeft + 10 + 'px'
+                    //right
+                }
+                if (!isBlockInWindow()) {
+                    text.innerHTML = 'БЭМС'
+                    setTimeout(() => text.innerHTML = '', 2000)
+                    return;
+                }
+            }
+
+            function isBlockInWindow() {
+
+                if (block.offsetLeft <= 0) {
+                    block.style.left = 20 + 'px';
+                    return false;
+                }
+                if (block.offsetTop <= 0) {
+                    block.style.top = 20 + 'px';
+                    return false;
+                }
+                if (block.offsetLeft + block.offsetWidth >= window.innerWidth) {
+                    block.style.left = window.innerWidth - block.offsetWidth - 20  + 'px';
+                    return false;
+                }
+                if (block.offsetTop + block.offsetHeight >= window.innerHeight) {
+                    block.style.top = window.innerHeight - block.offsetHeight - 20  + 'px';
+                    return false;
+                }
+
+                return true;
+            }
+
+        });
+    </script>
+    
+</body>
+</html>
